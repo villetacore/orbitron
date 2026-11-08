@@ -1,0 +1,44 @@
+// defer выполняется при выходе из блока в обратном порядке.
+
+fn early(x: int) -> int {
+    defer println("  early: defer 1");
+    defer println("  early: defer 2");
+    if x > 0 {
+        return x * 10;
+    }
+    println("  early: обычный путь");
+    0
+}
+
+fn value_before_defer() -> int {
+    var n = 1;
+    defer println("  defer видит n = {n}");
+    n = 5;
+    n
+}
+
+fn main() {
+    println("начало");
+    {
+        defer println("конец блока");
+        println("внутри блока");
+    }
+    println(early(3));
+    println(early(0));
+    println(value_before_defer());
+
+    for i in 0..3 {
+        defer println("  итерация {i} завершена");
+        if i == 1 {
+            continue;
+        }
+        if i == 2 {
+            break;
+        }
+        println("  тело {i}");
+    }
+    defer {
+        println("main: последний defer");
+    }
+    println("конец main");
+}

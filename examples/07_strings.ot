@@ -1,0 +1,28 @@
+// Строки: интерполяция, методы и модуль std/strings.
+import "std/strings";
+
+fn main() {
+    let lang = "Orbitron";
+    // в {...} можно писать любое выражение
+    println("{lang} — {lang.len()} букв, {if lang.contains("tron") { "звучит гордо" } else { "просто" }}");
+    println("фигурные скобки экранируются: \{x\}");
+
+    let csv = "имя, возраст, город";
+    let fields = split(csv, ",");
+    for i in 0..fields.len() {
+        println("{i + 1}. [{trim(fields[i])}]");
+    }
+
+    println(to_upper("hello"));
+    println(replace("мама мыла раму", "ма", "па"));
+    println(join(["a", "b", "c"], " -> "));
+    println(pad_left("7", 3, "0"));
+
+    // посимвольный разбор (байты UTF-8)
+    let digits = "2026";
+    var value = 0;
+    for i in 0..digits.len() {
+        value = value * 10 + digits.byte(i) - '0';
+    }
+    println("{value + 1}");
+}

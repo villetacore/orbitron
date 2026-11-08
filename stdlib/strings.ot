@@ -1,0 +1,124 @@
+// Стандартная библиотека Orbitron — строки.
+//
+//     import "std/strings";
+//
+// Строки хранятся в UTF-8; длины и индексы считаются в байтах.
+// Встроенные методы: s.len(), s.byte(i), s.slice(a, b), s.contains(t), s.find(t).
+
+fn starts_with(s: str, prefix: str) -> bool {
+    prefix.len() <= s.len() && s.slice(0, prefix.len()) == prefix
+}
+
+fn ends_with(s: str, suffix: str) -> bool {
+    suffix.len() <= s.len() && s.slice(s.len() - suffix.len(), s.len()) == suffix
+}
+
+fn is_space(b: int) -> bool { b == ' ' || b == '\t' || b == '\n' || b == '\r' }
+
+fn is_digit(b: int) -> bool { b >= '0' && b <= '9' }
+
+fn is_alpha(b: int) -> bool { (b >= 'a' && b <= 'z') || (b >= 'A' && b <= 'Z') }
+
+// Убирает пробельные символы по краям.
+fn trim(s: str) -> str {
+    var a = 0;
+    var b = s.len();
+    while a < b && is_space(s.byte(a)) {
+        a += 1;
+    }
+    while b > a && is_space(s.byte(b - 1)) {
+        b -= 1;
+    }
+    s.slice(a, b)
+}
+
+// Повторяет строку n раз.
+fn repeat(s: str, n: int) -> str {
+    var out = "";
+    for _ in 0..n {
+        out += s;
+    }
+    out
+}
+
+// Делит строку по разделителю: split("a,b", ",") == ["a", "b"].
+fn split(s: str, sep: str) -> [str] {
+    if sep.len() == 0 {
+        panic("split: пустой разделитель");
+    }
+    var parts: [str] = [];
+    var rest = s;
+    loop {
+        let i = rest.find(sep);
+        if i < 0 {
+            parts.push(rest);
+            break;
+        }
+        parts.push(rest.slice(0, i));
+        rest = rest.slice(i + sep.len(), rest.len());
+    }
+    parts
+}
+
+// Склеивает строки через разделитель.
+fn join(parts: [str], sep: str) -> str {
+    var out = "";
+    for i in 0..parts.len() {
+        if i > 0 {
+            out += sep;
+        }
+        out += parts[i];
+    }
+    out
+}
+
+// Заменяет все вхождения from на to.
+fn replace(s: str, from: str, to: str) -> str { join(split(s, from), to) }
+
+// Переводит латинские буквы в верхний регистр.
+fn to_upper(s: str) -> str {
+    var out = "";
+    var start = 0;
+    for i in 0..s.len() {
+        let b = s.byte(i);
+        if b >= 'a' && b <= 'z' {
+            out += s.slice(start, i) + chr(b - 32);
+            start = i + 1;
+        }
+    }
+    out + s.slice(start, s.len())
+}
+
+// Переводит латинские буквы в нижний регистр.
+fn to_lower(s: str) -> str {
+    var out = "";
+    var start = 0;
+    for i in 0..s.len() {
+        let b = s.byte(i);
+        if b >= 'A' && b <= 'Z' {
+            out += s.slice(start, i) + chr(b + 32);
+            start = i + 1;
+        }
+    }
+    out + s.slice(start, s.len())
+}
+
+// Дополняет строку слева символом fill до ширины width (в байтах).
+fn pad_left(s: str, width: int, fill: str) -> str {
+    var out = s;
+    while out.len() < width {
+        out = fill + out;
+    }
+    out
+}
+
+fn pad_right(s: str, width: int, fill: str) -> str {
+    var out = s;
+    while out.len() < width {
+        out += fill;
+    }
+    out
+}
+
+// Число вхождений подстроки.
+fn count(s: str, sub: str) -> int { split(s, sub).len() - 1 }

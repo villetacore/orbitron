@@ -1,0 +1,17 @@
+// defer откладывает выполнение до выхода из блока (в обратном порядке).
+
+fn process(name: str) -> int {
+    println("открываю {name}");
+    defer println("закрываю {name}");
+
+    if name == "" {
+        return -1; // defer выполнится и здесь
+    }
+    println("обрабатываю {name}");
+    name.len()
+}
+
+fn main() {
+    println("результат: {process("data.txt")}");
+    println("результат: {process("")}");
+}

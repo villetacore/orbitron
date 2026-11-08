@@ -1,0 +1,8 @@
+// exit: 101
+// stderr: ошибка выполнения: деление на ноль (rt_div.ot:7:15)
+
+fn main() {
+    let a = 10;
+    let b = a - 10;
+    println(a / b);
+}

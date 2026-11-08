@@ -1,0 +1,20 @@
+[package]
+name = "orbitron"
+version = "0.2.0"
+edition = "2021"
+rust-version = "1.75"
+authors = ["Виллета Корь <villetacore@proton.me>"]
+description = "Orbitron — статически типизированный компилируемый язык с бэкендами LLVM и JVM"
+keywords = ["compiler", "language", "llvm", "jvm", "programming-language"]
+categories = ["compilers", "command-line-utilities"]
+license = "MIT"
+repository = "https://github.com/villetacore/orbitron"
+readme = "README.md"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+
+[profile.release]
+lto = true
+codegen-units = 1

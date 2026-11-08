@@ -1,0 +1,53 @@
+// Игра «Жизнь» Конвея на торе 20×10.
+
+const W: int = 20;
+const H: int = 10;
+
+fn idx(x: int, y: int) -> int { ((y + H) % H) * W + (x + W) % W }
+
+fn neighbors(cells: [bool], x: int, y: int) -> int {
+    var n = 0;
+    for dy in -1..=1 {
+        for dx in -1..=1 {
+            if (dx != 0 || dy != 0) && cells[idx(x + dx, y + dy)] {
+                n += 1;
+            }
+        }
+    }
+    n
+}
+
+fn step(cells: [bool]) -> [bool] {
+    var next = [false; W * H];
+    for y in 0..H {
+        for x in 0..W {
+            let n = neighbors(cells, x, y);
+            let alive = cells[idx(x, y)];
+            next[idx(x, y)] = n == 3 || (alive && n == 2);
+        }
+    }
+    next
+}
+
+fn show(cells: [bool]) {
+    for y in 0..H {
+        var line = "";
+        for x in 0..W {
+            line += if cells[idx(x, y)] { "█" } else { "·" };
+        }
+        println(line);
+    }
+}
+
+fn main() {
+    var cells = [false; W * H];
+    // глайдер
+    for p in [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]] {
+        cells[idx(p[0], p[1])] = true;
+    }
+    for gen in 0..3 {
+        println("поколение {gen}:");
+        show(cells);
+        cells = step(cells);
+    }
+}

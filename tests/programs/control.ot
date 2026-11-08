@@ -1,0 +1,146 @@
+// Ветвления и циклы: if/match как выражения, диапазоны, break/continue.
+
+enum Dir { North, East, South, West }
+
+fn turn(d: Dir) -> Dir {
+    match d {
+        Dir::North => Dir::East,
+        Dir::East => Dir::South,
+        Dir::South => Dir::West,
+        Dir::West => Dir::North,
+    }
+}
+
+fn classify(n: int) -> str {
+    match n {
+        0 => "ноль",
+        1 | 2 | 3 => "мало",
+        4..10 => "несколько",
+        10..=99 => "много",
+        -9..0 => "отрицательное",
+        _ => "очень много",
+    }
+}
+
+fn kind(s: str) -> int {
+    match s {
+        "a" | "b" => 1,
+        "привет" => 2,
+        _ => 0,
+    }
+}
+
+fn sign_word(b: bool) -> str {
+    match b {
+        true => "да",
+        false => "нет",
+    }
+}
+
+fn first_even(xs: [int]) -> int {
+    for x in xs {
+        if x % 2 == 0 {
+            return x;
+        }
+    }
+    -1
+}
+
+fn main() {
+    let x = 15;
+    let size = if x > 10 { "большое" } else if x > 5 { "среднее" } else { "малое" };
+    println(size);
+
+    var d = Dir::North;
+    for _ in 0..5 {
+        print("{d} ");
+        d = turn(d);
+    }
+    println();
+
+    for n in [0, 2, 5, 10, 99, 100, -3] {
+        print("{classify(n)}; ");
+    }
+    println();
+    println("{kind("b")} {kind("привет")} {kind("?")} {sign_word(1 < 2)}");
+
+    // включительный диапазон доходит до конца без переполнения
+    var count = 0;
+    for i in 9223372036854775805..=9223372036854775807 {
+        count += 1;
+    }
+    println(count);
+    for i in 3..=1 {
+        println("не должно печататься");
+    }
+    for i in 5..5 {
+        println("и это тоже");
+    }
+
+    // break и continue
+    var total = 0;
+    for i in 0..100 {
+        if i % 3 == 0 {
+            continue;
+        }
+        if i > 20 {
+            break;
+        }
+        total += i;
+    }
+    println(total);
+
+    // continue во включительном диапазоне
+    var odd = 0;
+    for i in 1..=10 {
+        if i % 2 == 0 {
+            continue;
+        }
+        odd += i;
+    }
+    println(odd);
+
+    // вложенные циклы и while
+    var pairs = 0;
+    var i = 0;
+    while i < 5 {
+        var j = 0;
+        while true {
+            if j >= i {
+                break;
+            }
+            pairs += 1;
+            j += 1;
+        }
+        i += 1;
+    }
+    println(pairs);
+
+    // loop как бесконечный цикл с выходом
+    var n = 27;
+    var steps = 0;
+    loop {
+        if n == 1 {
+            break;
+        }
+        n = if n % 2 == 0 { n / 2 } else { 3 * n + 1 };
+        steps += 1;
+    }
+    println("шагов Коллатца: {steps}");
+    println(first_even([1, 3, 8, 5]));
+    println(first_even([1, 3]));
+
+    // блок как выражение
+    let y = {
+        let a = 2;
+        let b = 3;
+        a * b
+    };
+    println(y);
+
+    // логические операции с коротким замыканием
+    let arr = [1, 2, 3];
+    let k = 5;
+    println(k < arr.len() && arr[k] == 1);
+    println(k >= arr.len() || arr[k] == 1);
+}

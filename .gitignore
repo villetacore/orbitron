@@ -1,0 +1,9 @@
+/target
+**/*.rs.bk
+/build
+*.ll
+*.jar
+.idea/
+.vscode/
+.DS_Store
+.claude/settings.local.json

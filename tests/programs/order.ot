@@ -1,0 +1,27 @@
+// Порядок вычисления аргументов слева направо (важно для JVM-бэкенда).
+
+fn t(label: str, v: int) -> int {
+    print("{label} ");
+    v
+}
+
+fn three(a: int, b: int, c: int) -> int { a * 100 + b * 10 + c }
+
+struct P { a: int, b: int }
+
+fn main() {
+    let r = three(t("a", 1), if t("c", 1) > 0 { t("b", 2) } else { 0 }, t("d", 3));
+    println(r);
+    let m = t("x", 1) + match t("y", 2) {
+        2 => t("z", 3),
+        _ => 0,
+    };
+    println(m);
+    let arr = [t("p", 1), { t("q", 2) }, t("r", 3)];
+    println(arr.len());
+    let ok = t("l", 0) == 1 && t("never", 1) == 1;
+    println(ok);
+    let p = P { b: t("b", 2), a: t("a", 1) };
+    println(p.a + p.b);
+    println("{t("i1", 1)}-{if true { t("i2", 2) } else { 0 }}");
+}

@@ -1,0 +1,64 @@
+// Целочисленная и вещественная арифметика, приведения, форматирование.
+import "std/math";
+
+fn main() {
+    println(7 / 2);
+    println(-7 / 2);
+    println(-7 % 3);
+    println(7 % -3);
+    println(2 ** 10);
+    println(-2 ** 2);
+    println((-2) ** 3);
+    println(2 ** 3 ** 2);
+    println(1 << 62);
+    println(-16 >> 2);
+    println(1 << 65);
+    println(0xff & 0b1010 | 0o7 ^ 1);
+    println(~0);
+    println(INT_MAX + 1 == INT_MIN);
+    println(INT_MIN / -1);
+    println(INT_MIN % -1);
+    println(1_000_000 * 3);
+    println('A');
+    println('я');
+
+    println(1.0);
+    println(0.1 + 0.2);
+    println(1.0 / 3.0);
+    println(100.0);
+    println(123456.789);
+    println(1e15);
+    println(1e16);
+    println(1.5e-5);
+    println(1e-6);
+    println(-0.0);
+    println(2.5 % 1.0);
+    println(2.0 ** 0.5);
+    println(1.0 / 0.0);
+    println(-1.0 / 0.0);
+    println((0.0 / 0.0) == (0.0 / 0.0));
+
+    println(3.99 as int);
+    println(-3.99 as int);
+    println(1e30 as int);
+    println((0.0 / 0.0) as int);
+    println(7 as float / 2.0);
+    println(true as int + false as int);
+    println(round(2.5));
+    println(round(-2.5));
+    println(round(0.49999999999999994));
+    println(floor(-1.5));
+    println(ceil(-1.5));
+    println(abs(-5));
+    println(abs(-5.5));
+    println(min(3, -4));
+    println(max(2.5, 1.0));
+    println(sqrt(2.0));
+    println(gcd(84, 36));
+    println(lcm(4, 6));
+    println(isqrt(1_000_000_007));
+    println(sign(-42));
+    println(factorial(20));
+    println(fib(90));
+    println(is_prime(1_000_000_007));
+}

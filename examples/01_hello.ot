@@ -1,0 +1,11 @@
+// Первая программа на Orbitron.
+//
+//     orbitron run examples/01_hello.ot
+
+fn main() {
+    println("Привет, мир!");
+
+    let name = "Orbitron";
+    let year = 2026;
+    println("{name} приветствует {year} год");
+}

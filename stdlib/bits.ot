@@ -1,0 +1,66 @@
+// Стандартная библиотека Orbitron — битовые операции.
+//
+//     import "std/bits";
+//
+// Операторы: & | ^ ~ << >> (сдвиг >> арифметический).
+
+// Число единичных битов.
+fn popcount(x: int) -> int {
+    var n = 0;
+    var v = x;
+    for _ in 0..64 {
+        n += v & 1;
+        v = v >> 1;
+    }
+    n
+}
+
+fn bit(x: int, i: int) -> bool { (x >> i) & 1 == 1 }
+
+fn set_bit(x: int, i: int) -> int { x | (1 << i) }
+
+fn clear_bit(x: int, i: int) -> int { x & ~(1 << i) }
+
+fn toggle_bit(x: int, i: int) -> int { x ^ (1 << i) }
+
+fn is_power_of_two(x: int) -> bool { x > 0 && x & (x - 1) == 0 }
+
+// Логический (беззнаковый) сдвиг вправо.
+fn shr_logical(x: int, n: int) -> int {
+    if n <= 0 {
+        return x;
+    }
+    if n >= 64 {
+        return 0;
+    }
+    (x >> n) & ~(-1 << (64 - n))
+}
+
+// Двоичная запись неотрицательного числа.
+fn to_binary(x: int) -> str {
+    if x == 0 {
+        return "0";
+    }
+    var out = "";
+    var v = x;
+    while v > 0 {
+        out = "{v & 1}" + out;
+        v = v >> 1;
+    }
+    out
+}
+
+// Шестнадцатеричная запись неотрицательного числа.
+fn to_hex(x: int) -> str {
+    if x == 0 {
+        return "0";
+    }
+    let digits = "0123456789abcdef";
+    var out = "";
+    var v = x;
+    while v > 0 {
+        out = digits.slice(v & 15, (v & 15) + 1) + out;
+        v = v >> 4;
+    }
+    out
+}

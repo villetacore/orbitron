@@ -1,0 +1,14 @@
+// exit: 101
+// stderr: паника: что-то пошло не так: 42
+
+fn check(x: int) -> int {
+    if x > 10 {
+        panic("что-то пошло не так: {x}");
+    }
+    x
+}
+
+fn main() {
+    println(check(1));
+    println(check(42));
+}

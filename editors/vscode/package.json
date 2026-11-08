@@ -1,0 +1,28 @@
+{
+  "name": "orbitron",
+  "displayName": "Orbitron",
+  "description": "Подсветка синтаксиса языка Orbitron (.ot)",
+  "version": "0.2.0",
+  "publisher": "villetacore",
+  "license": "MIT",
+  "repository": "https://github.com/villetacore/orbitron",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "orbitron",
+        "aliases": ["Orbitron"],
+        "extensions": [".ot"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "orbitron",
+        "scopeName": "source.orbitron",
+        "path": "./syntaxes/orbitron.tmLanguage.json"
+      }
+    ]
+  }
+}

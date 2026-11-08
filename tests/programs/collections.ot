@@ -1,0 +1,92 @@
+// Массивы и структуры.
+import "std/arrays";
+
+struct Item {
+    name: str,
+    price: float,
+    count: int,
+}
+
+fn total(items: [Item]) -> float {
+    var sum = 0.0;
+    for it in items {
+        sum += it.price * it.count as float;
+    }
+    sum
+}
+
+fn main() {
+    var xs = [5, 3, 8, 1, 9, 2];
+    sort(xs);
+    println(to_str(xs));
+    xs.push(10);
+    println("{xs.len()} {xs[xs.len() - 1]}");
+    println(xs.pop());
+    println(xs.len());
+    xs[0] = 100;
+    xs[1] += 5;
+    println(to_str(xs));
+    reverse(xs);
+    println(to_str(xs));
+
+    let grid = [[0; 3]; 2];
+    println(grid.len());
+    // все строки — один и тот же массив (ссылочная семантика)
+    grid[0][1] = 7;
+    println(grid[1][1]);
+
+    var rows: [[int]] = [];
+    for r in 0..3 {
+        var row: [int] = [];
+        for c in 0..3 {
+            row.push(r * 3 + c);
+        }
+        rows.push(row);
+    }
+    println(rows[2][1]);
+
+    let evens = filter(range(0, 10), fn(x: int) -> bool { x % 2 == 0 });
+    println(to_str(evens));
+    println(to_str(map(evens, fn(x: int) -> int { x * x })));
+    println(fold(range(1, 6), 1, fn(a: int, b: int) -> int { a * b }));
+    println("{min_of(xs)} {max_of(xs)} {sum(xs)} {index_of(xs, 9)} {contains(xs, 42)}");
+
+    let items = [
+        Item { name: "яблоко", price: 1.5, count: 4 },
+        Item { count: 2, price: 10.25, name: "сыр" },
+    ];
+    println(total(items));
+    items[0].count = 10;
+    println(items[0].count);
+    let first = items[0];
+    first.price = 2.0;
+    println(items[0].price);
+
+    let fl = [3.5, -1.0, 2.25];
+    sort_float(fl);
+    println(to_str_float(fl));
+
+    // перебор массива, который растёт во время цикла
+    var queue = [1];
+    var seen = 0;
+    for q in queue {
+        seen += 1;
+        if q < 5 {
+            queue.push(q + 1);
+        }
+    }
+    println(seen);
+
+    let empty: [str] = [];
+    println(empty.len());
+    let flags = [true, false, true];
+    var t = 0;
+    for f in flags {
+        if f {
+            t += 1;
+        }
+    }
+    println(t);
+    println(flags[1] == flags[2]);
+    println(xs[2] == xs[2]);
+}

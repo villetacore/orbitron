@@ -1,0 +1,179 @@
+// Стандартная библиотека Orbitron — массивы.
+//
+//     import "std/arrays";
+//
+// Встроенные методы массивов: a.len(), a.push(x), a.pop().
+// Обобщённых функций в языке нет, поэтому функции даны для [int] и [float].
+
+// Массив чисел lo, lo+1, ..., hi-1.
+fn range(lo: int, hi: int) -> [int] {
+    var out: [int] = [];
+    for i in lo..hi {
+        out.push(i);
+    }
+    out
+}
+
+fn sum(xs: [int]) -> int {
+    var s = 0;
+    for x in xs {
+        s += x;
+    }
+    s
+}
+
+fn sum_float(xs: [float]) -> float {
+    var s = 0.0;
+    for x in xs {
+        s += x;
+    }
+    s
+}
+
+fn min_of(xs: [int]) -> int {
+    if xs.len() == 0 {
+        panic("min_of: пустой массив");
+    }
+    var m = xs[0];
+    for x in xs {
+        m = min(m, x);
+    }
+    m
+}
+
+fn max_of(xs: [int]) -> int {
+    if xs.len() == 0 {
+        panic("max_of: пустой массив");
+    }
+    var m = xs[0];
+    for x in xs {
+        m = max(m, x);
+    }
+    m
+}
+
+// Индекс первого вхождения или -1.
+fn index_of(xs: [int], value: int) -> int {
+    for i in 0..xs.len() {
+        if xs[i] == value {
+            return i;
+        }
+    }
+    -1
+}
+
+fn contains(xs: [int], value: int) -> bool { index_of(xs, value) >= 0 }
+
+fn copy(xs: [int]) -> [int] {
+    var out: [int] = [];
+    for x in xs {
+        out.push(x);
+    }
+    out
+}
+
+// Разворачивает массив на месте.
+fn reverse(xs: [int]) {
+    var i = 0;
+    var j = xs.len() - 1;
+    while i < j {
+        let t = xs[i];
+        xs[i] = xs[j];
+        xs[j] = t;
+        i += 1;
+        j -= 1;
+    }
+}
+
+// Сортирует массив на месте (быстрая сортировка).
+fn sort(xs: [int]) { quicksort(xs, 0, xs.len() - 1); }
+
+fn quicksort(xs: [int], lo: int, hi: int) {
+    if lo >= hi {
+        return;
+    }
+    let pivot = xs[(lo + hi) / 2];
+    var i = lo;
+    var j = hi;
+    while i <= j {
+        while xs[i] < pivot {
+            i += 1;
+        }
+        while xs[j] > pivot {
+            j -= 1;
+        }
+        if i <= j {
+            let t = xs[i];
+            xs[i] = xs[j];
+            xs[j] = t;
+            i += 1;
+            j -= 1;
+        }
+    }
+    quicksort(xs, lo, j);
+    quicksort(xs, i, hi);
+}
+
+fn sort_float(xs: [float]) {
+    for i in 1..xs.len() {
+        let v = xs[i];
+        var j = i - 1;
+        while j >= 0 && xs[j] > v {
+            xs[j + 1] = xs[j];
+            j -= 1;
+        }
+        xs[j + 1] = v;
+    }
+}
+
+// Новый массив из элементов, для которых pred возвращает true.
+fn filter(xs: [int], pred: fn(int) -> bool) -> [int] {
+    var out: [int] = [];
+    for x in xs {
+        if pred(x) {
+            out.push(x);
+        }
+    }
+    out
+}
+
+// Новый массив из f(x) для каждого элемента.
+fn map(xs: [int], f: fn(int) -> int) -> [int] {
+    var out: [int] = [];
+    for x in xs {
+        out.push(f(x));
+    }
+    out
+}
+
+// Свёртка: fold([1, 2, 3], 0, add) == 6.
+fn fold(xs: [int], init: int, f: fn(int, int) -> int) -> int {
+    var acc = init;
+    for x in xs {
+        acc = f(acc, x);
+    }
+    acc
+}
+
+// Строковое представление: "[1, 2, 3]".
+fn to_str(xs: [int]) -> str {
+    var out = "[";
+    for i in 0..xs.len() {
+        if i > 0 {
+            out += ", ";
+        }
+        out += "{xs[i]}";
+    }
+    out + "]"
+}
+
+fn to_str_float(xs: [float]) -> str {
+    var out = "[";
+    for i in 0..xs.len() {
+        if i > 0 {
+            out += ", ";
+        }
+        out += "{xs[i]}";
+    }
+    out + "]"
+}

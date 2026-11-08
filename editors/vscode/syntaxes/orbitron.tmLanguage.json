@@ -1,0 +1,81 @@
+{
+  "scopeName": "source.orbitron",
+  "name": "Orbitron",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#declarations" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#calls" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.orbitron", "match": "//.*$" },
+        { "name": "comment.block.orbitron", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.orbitron",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            { "name": "constant.character.escape.orbitron", "match": "\\\\(u\\{[0-9a-fA-F]+\\}|.)" },
+            {
+              "name": "meta.interpolation.orbitron",
+              "begin": "\\{",
+              "end": "\\}",
+              "beginCaptures": { "0": { "name": "punctuation.section.interpolation.begin.orbitron" } },
+              "endCaptures": { "0": { "name": "punctuation.section.interpolation.end.orbitron" } },
+              "patterns": [{ "include": "$self" }]
+            }
+          ]
+        },
+        { "name": "constant.character.orbitron", "match": "'(\\\\.|[^'\\\\])'" }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.orbitron", "match": "\\b0[xX][0-9a-fA-F_]+\\b|\\b0[bB][01_]+\\b|\\b0[oO][0-7_]+\\b" },
+        { "name": "constant.numeric.orbitron", "match": "\\b[0-9][0-9_]*(\\.[0-9][0-9_]*)?([eE][+-]?[0-9]+)?\\b" }
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {
+          "match": "\\b(fn)\\s+([\\p{L}_][\\p{L}\\p{N}_]*)",
+          "captures": { "1": { "name": "keyword.declaration.function.orbitron" }, "2": { "name": "entity.name.function.orbitron" } }
+        },
+        {
+          "match": "\\b(struct|enum|impl)\\s+([\\p{L}_][\\p{L}\\p{N}_]*)",
+          "captures": { "1": { "name": "keyword.declaration.type.orbitron" }, "2": { "name": "entity.name.type.orbitron" } }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        { "name": "keyword.control.orbitron", "match": "\\b(if|else|match|while|for|in|loop|break|continue|return|defer)\\b" },
+        { "name": "keyword.other.orbitron", "match": "\\b(let|var|const|fn|struct|enum|impl|import|extern|as)\\b" },
+        { "name": "constant.language.orbitron", "match": "\\b(true|false)\\b" },
+        { "name": "variable.language.self.orbitron", "match": "\\bself\\b" },
+        { "name": "keyword.operator.orbitron", "match": "\\|>|=>|->|::|\\.\\.=?|\\*\\*|&&|\\|\\||[-+*/%=!<>&|^~]=?" }
+      ]
+    },
+    "types": {
+      "patterns": [
+        { "name": "support.type.primitive.orbitron", "match": "\\b(int|float|bool|str)\\b" },
+        { "name": "entity.name.type.orbitron", "match": "\\b\\p{Lu}[\\p{L}\\p{N}_]*\\b" }
+      ]
+    },
+    "calls": {
+      "patterns": [
+        { "name": "support.function.builtin.orbitron", "match": "\\b(print|println|eprintln|read_line|parse_int|parse_float|chr|exit|panic|assert|sqrt|sin|cos|tan|atan2|exp|ln|floor|ceil|round|abs|min|max|clock)(?=\\s*\\()" },
+        { "name": "entity.name.function.call.orbitron", "match": "\\b[\\p{L}_][\\p{L}\\p{N}_]*(?=\\s*\\()" }
+      ]
+    }
+  }
+}

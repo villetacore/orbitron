@@ -1,0 +1,52 @@
+// Структуры, методы и функции типа.
+
+struct Vec2 {
+    x: float,
+    y: float,
+}
+
+impl Vec2 {
+    // функция типа (без self) вызывается как Vec2::new(...)
+    fn new(x: float, y: float) -> Vec2 { Vec2 { x, y } }
+
+    fn len(self) -> float { sqrt(self.x * self.x + self.y * self.y) }
+
+    fn add(self, o: Vec2) -> Vec2 { Vec2::new(self.x + o.x, self.y + o.y) }
+
+    fn scale(self, k: float) -> Vec2 { Vec2::new(self.x * k, self.y * k) }
+
+    fn show(self) -> str { "({self.x}, {self.y})" }
+}
+
+struct Account {
+    owner: str,
+    balance: int,
+}
+
+impl Account {
+    fn deposit(self, amount: int) {
+        self.balance += amount;
+    }
+
+    fn withdraw(self, amount: int) -> bool {
+        if amount > self.balance {
+            return false;
+        }
+        self.balance -= amount;
+        true
+    }
+}
+
+fn main() {
+    let a = Vec2::new(3.0, 4.0);
+    let b = Vec2 { x: 1.0, y: -1.0 };
+    println("|a| = {a.len()}");
+    println("a + b = {a.add(b).show()}");
+    println("2a = {a.scale(2.0).show()}");
+
+    // структуры передаются по ссылке: метод меняет исходный объект
+    let acc = Account { owner: "Анна", balance: 100 };
+    acc.deposit(50);
+    let ok = acc.withdraw(500);
+    println("{acc.owner}: баланс {acc.balance}, снятие 500 прошло: {ok}");
+}

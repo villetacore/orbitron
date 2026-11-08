@@ -1,0 +1,13 @@
+// Вызов функций из библиотеки C (только LLVM-бэкенд).
+//
+// Параметры и результат extern-функций: int, float, bool, str.
+
+extern fn puts(s: str) -> int;
+extern fn getpid() -> int;
+extern fn hypot(x: float, y: float) -> float;
+
+fn main() {
+    puts("строка напечатана функцией puts из libc");
+    println("hypot(5, 12) = {hypot(5.0, 12.0)}");
+    println("pid > 0: {getpid() > 0}");
+}

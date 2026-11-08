@@ -1,0 +1,100 @@
+// Функции, методы, функциональные значения, лямбды, конвейер.
+
+struct Counter {
+    value: int,
+    step: int,
+}
+
+impl Counter {
+    fn new(step: int) -> Counter { Counter { value: 0, step } }
+
+    fn tick(self) -> int {
+        self.value += self.step;
+        self.value
+    }
+}
+
+struct Button {
+    label: str,
+    on_click: fn(str) -> str,
+}
+
+enum Op { Add, Mul }
+
+impl Op {
+    fn apply(self, a: int, b: int) -> int {
+        match self {
+            Op::Add => a + b,
+            Op::Mul => a * b,
+        }
+    }
+
+    fn symbol(self) -> str {
+        match self {
+            Op::Add => "+",
+            Op::Mul => "*",
+        }
+    }
+}
+
+fn double(x: int) -> int { x * 2 }
+
+fn inc(x: int) -> int { x + 1 }
+
+fn add(a: int, b: int) -> int { a + b }
+
+fn apply_twice(f: fn(int) -> int, x: int) -> int { f(f(x)) }
+
+fn compose_name(f: fn(int) -> int) -> fn(int) -> int { f }
+
+fn ackermann(m: int, n: int) -> int {
+    if m == 0 {
+        return n + 1;
+    }
+    if n == 0 {
+        return ackermann(m - 1, 1);
+    }
+    ackermann(m - 1, ackermann(m, n - 1))
+}
+
+fn greet(name: str) -> str { "Привет, {name}!" }
+
+fn nothing() {}
+
+fn main() {
+    let c = Counter::new(5);
+    c.tick();
+    c.tick();
+    println(c.tick());
+    println(c.value);
+
+    let f = double;
+    println(f(21));
+    println(apply_twice(inc, 10));
+    println(apply_twice(fn(x: int) -> int { x * x }, 3));
+    println(compose_name(double)(4));
+
+    let fs: [fn(int) -> int] = [double, inc, fn(x: int) -> int { -x }];
+    for g in fs {
+        print("{g(7)} ");
+    }
+    println();
+
+    println(3 |> double |> inc);
+    println(10 |> add(5));
+    println(5 |> add(1) |> double);
+
+    let b = Button { label: "OK", on_click: greet };
+    println(b.on_click(b.label));
+
+    for op in [Op::Add, Op::Mul] {
+        println("6 {op.symbol()} 7 = {op.apply(6, 7)}");
+    }
+    let m = Op::Mul;
+    println(m.apply(m.apply(2, 3), 4));
+
+    println(ackermann(2, 3));
+    nothing();
+    let shout = fn(s: str) -> str { s + "!" };
+    println("hey" |> shout |> shout);
+}

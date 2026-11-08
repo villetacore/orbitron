@@ -1,0 +1,7 @@
+// exit: 7
+
+fn main() {
+    defer println("не выполнится: exit не запускает defer");
+    println("до exit");
+    exit(7);
+}

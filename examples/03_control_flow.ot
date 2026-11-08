@@ -1,0 +1,57 @@
+// if, match, циклы. if и match — выражения и возвращают значения.
+
+enum Weather { Sunny, Cloudy, Rainy }
+
+fn advice(w: Weather) -> str {
+    match w {
+        Weather::Sunny => "возьмите очки",
+        Weather::Cloudy => "можно гулять",
+        Weather::Rainy => "возьмите зонт",
+    }
+}
+
+fn grade(score: int) -> str {
+    match score {
+        90..=100 => "отлично",
+        70..90 => "хорошо",
+        50..70 => "удовлетворительно",
+        _ => "попробуйте ещё",
+    }
+}
+
+fn main() {
+    let t = 23;
+    let feeling = if t > 25 { "жарко" } else if t > 15 { "тепло" } else { "холодно" };
+    println("{t}°C — {feeling}");
+
+    for w in [Weather::Sunny, Weather::Rainy] {
+        println("{w}: {advice(w)}");
+    }
+
+    for score in [95, 72, 40] {
+        println("{score} баллов — {grade(score)}");
+    }
+
+    // for по диапазону: 1..5 не включает 5, 1..=5 включает
+    var sum = 0;
+    for i in 1..=5 {
+        sum += i;
+    }
+    println("1 + ... + 5 = {sum}");
+
+    // while и loop
+    var n = 1;
+    while n < 1000 {
+        n *= 3;
+    }
+    println("первая степень 3 больше 1000: {n}");
+
+    var tries = 0;
+    loop {
+        tries += 1;
+        if tries * tries > 50 {
+            break;
+        }
+    }
+    println("попыток: {tries}");
+}

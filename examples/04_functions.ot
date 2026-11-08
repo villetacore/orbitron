@@ -1,0 +1,46 @@
+// Функции, рекурсия, функции как значения, лямбды и конвейер |>.
+
+fn square(x: int) -> int { x * x }
+
+fn inc(x: int) -> int { x + 1 }
+
+fn gcd(a: int, b: int) -> int {
+    if b == 0 {
+        return a;
+    }
+    gcd(b, a % b)
+}
+
+// параметр-функция
+fn apply_n(f: fn(int) -> int, n: int, x: int) -> int {
+    var r = x;
+    for _ in 0..n {
+        r = f(r);
+    }
+    r
+}
+
+fn hanoi(n: int, from: str, to: str, via: str) -> int {
+    if n == 0 {
+        return 0;
+    }
+    hanoi(n - 1, from, via, to) + 1 + hanoi(n - 1, via, to, from)
+}
+
+fn main() {
+    println("gcd(84, 36) = {gcd(84, 36)}");
+    println("ходов в Ханойской башне из 10 дисков: {hanoi(10, "A", "C", "B")}");
+
+    // функцию можно сохранить в переменную
+    let f = square;
+    println("square(12) = {f(12)}");
+    println("inc 5 раз от 0 = {apply_n(inc, 5, 0)}");
+
+    // лямбда — анонимная функция (не захватывает локальные переменные)
+    let cube = fn(x: int) -> int { x * x * x };
+    println("cube(3) = {cube(3)}");
+
+    // конвейер: x |> f(a) означает f(x, a)
+    let r = 3 |> square |> inc |> square;
+    println("3 |> square |> inc |> square = {r}");
+}

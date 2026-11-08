@@ -1,0 +1,109 @@
+// Стандартная библиотека Orbitron — математика.
+//
+//     import "std/math";
+//
+// Базовые функции sqrt, sin, cos, tan, atan2, exp, ln, floor, ceil, round,
+// abs, min и max встроены в язык и доступны без импорта.
+
+const PI: float = 3.141592653589793;
+const TAU: float = 6.283185307179586;
+const E: float = 2.718281828459045;
+const INT_MAX: int = 9223372036854775807;
+const INT_MIN: int = -9223372036854775807 - 1;
+
+// Знак числа: -1, 0 или 1.
+fn sign(x: int) -> int {
+    if x > 0 {
+        1
+    } else if x < 0 {
+        -1
+    } else {
+        0
+    }
+}
+
+// Ограничивает значение отрезком [lo, hi].
+fn clamp(x: int, lo: int, hi: int) -> int { min(max(x, lo), hi) }
+
+fn clamp_float(x: float, lo: float, hi: float) -> float { min(max(x, lo), hi) }
+
+// Наибольший общий делитель (алгоритм Евклида).
+fn gcd(a: int, b: int) -> int {
+    var x = abs(a);
+    var y = abs(b);
+    while y != 0 {
+        let t = x % y;
+        x = y;
+        y = t;
+    }
+    x
+}
+
+// Наименьшее общее кратное.
+fn lcm(a: int, b: int) -> int {
+    if a == 0 || b == 0 {
+        return 0;
+    }
+    abs(a / gcd(a, b) * b)
+}
+
+fn is_prime(n: int) -> bool {
+    if n < 2 {
+        return false;
+    }
+    if n % 2 == 0 {
+        return n == 2;
+    }
+    var d = 3;
+    while d * d <= n {
+        if n % d == 0 {
+            return false;
+        }
+        d += 2;
+    }
+    true
+}
+
+fn factorial(n: int) -> int {
+    var r = 1;
+    for i in 2..=n {
+        r *= i;
+    }
+    r
+}
+
+// n-е число Фибоначчи: fib(0) = 0, fib(1) = 1.
+fn fib(n: int) -> int {
+    var a = 0;
+    var b = 1;
+    for _ in 0..n {
+        let t = a + b;
+        a = b;
+        b = t;
+    }
+    a
+}
+
+// Целочисленный квадратный корень: наибольшее r, такое что r * r <= n.
+fn isqrt(n: int) -> int {
+    if n < 0 {
+        panic("isqrt: отрицательный аргумент");
+    }
+    var r = sqrt(n as float) as int;
+    while r * r > n {
+        r -= 1;
+    }
+    while (r + 1) * (r + 1) <= n {
+        r += 1;
+    }
+    r
+}
+
+fn hypot(x: float, y: float) -> float { sqrt(x * x + y * y) }
+
+fn to_radians(deg: float) -> float { deg * PI / 180.0 }
+
+fn to_degrees(rad: float) -> float { rad * 180.0 / PI }
+
+// Линейная интерполяция между a и b, t ∈ [0, 1].
+fn lerp(a: float, b: float, t: float) -> float { a + (b - a) * t }

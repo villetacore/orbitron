@@ -1,0 +1,30 @@
+// Переменные, константы и базовые типы.
+
+const MAX_LEVEL: int = 10;
+const GREETING: str = "Здравствуйте";
+
+fn main() {
+    // let — неизменяемая привязка, var — изменяемая переменная
+    let pi = 3.14159;
+    var level = 1;
+    level += 2;
+
+    // тип можно указать явно
+    let ratio: float = 0.75;
+    let ready: bool = level < MAX_LEVEL;
+    let letter = 'A'; // символьный литерал — это код символа (int)
+
+    println("{GREETING}! Уровень {level} из {MAX_LEVEL}");
+    println("pi = {pi}, ratio = {ratio}, ready = {ready}, letter = {letter}");
+
+    // числа: разделители разрядов, другие системы счисления, степень
+    let big = 1_000_000;
+    let mask = 0xff;
+    let bits = 0b1010;
+    println("{big} {mask} {bits} {2 ** 16}");
+
+    // неявных преобразований нет — только явные `as`
+    let half = level as float / 2.0;
+    let rounded = half as int;
+    println("half = {half}, rounded = {rounded}");
+}

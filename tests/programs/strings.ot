@@ -1,0 +1,46 @@
+// Строки: интерполяция, экранирование, методы, сравнение, std/strings.
+import "std/strings";
+
+fn main() {
+    let name = "Orbitron";
+    let v = 2;
+    println("Язык {name} v{v}, {v * 10}% готов");
+    println("вложенные: {"<" + name + ">"} и {if v > 1 { "да" } else { "нет" }}");
+    println("скобки: \{не интерполяция\} \"кавычки\" \\ слеш");
+    println("табуляция:\tконец");
+    println("юникод: \u{1F680} \u{44F}");
+
+    let s = "привет, мир";
+    println(s.len());
+    println(s.slice(0, 12));
+    println(s.byte(0));
+    println(s.contains("мир"));
+    println(s.find("мир"));
+    println(s.find("нет"));
+    println("abc" < "abd");
+    println("abc" == "ab" + "c");
+    println("b" > "a" && "" < "a");
+    println(chr(65) + chr(1071) + chr(128640));
+
+    println(trim("   отступы  \t"));
+    println(join(split("a,b,,c", ","), " | "));
+    println(split("a,b,,c", ",").len());
+    println(replace("кот и кот", "кот", "пёс"));
+    println(to_upper("Hello, Мир"));
+    println(to_lower("ABC def"));
+    println(repeat("ab", 3));
+    println(pad_left("42", 5, "0"));
+    println(starts_with("orbitron", "orb"));
+    println(ends_with("orbitron", "tron"));
+    println(count("банан", "ан"));
+
+    var acc = "";
+    for i in 0..5 {
+        acc += "{i}";
+    }
+    println(acc);
+    println(parse_int("  -123 ") + 1);
+    println(parse_float("2.5e3"));
+    let e = "";
+    println("[{e}]");
+}

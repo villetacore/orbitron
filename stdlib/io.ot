@@ -1,0 +1,17 @@
+// Стандартная библиотека Orbitron — ввод.
+//
+//     import "std/io";
+//
+// Встроенные функции: read_line() -> str, parse_int(s), parse_float(s).
+
+// Печатает приглашение и читает строку.
+fn input(prompt: str) -> str {
+    print(prompt);
+    read_line()
+}
+
+// Читает целое число из строки ввода.
+fn read_int() -> int { parse_int(read_line()) }
+
+// Читает вещественное число из строки ввода.
+fn read_float() -> float { parse_float(read_line()) }
